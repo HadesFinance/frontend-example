@@ -3,6 +3,7 @@ let globals = {
 	hTokenMap: new Map(),
 	lpTokenMap: new Map(),
 	loginAccount: null,
+	pendingTransactions: [],
 }
 
 function literalToReal(literal, decimals) {
@@ -41,6 +42,29 @@ function promptSymbol(defaultSymbol) {
 	return { symbol, address }
 }
 
+async function launchTransaction(transaction) {
+	try {
+		const result = await transaction
+		if (result.transactionHash) {
+			globals.pendingTransactions.push(result.transactionHash)
+		}
+	} catch (e) {
+		console.log('failed to launch transaction:', e)
+	}
+}
+
+async function confirmPendingTransactions() {
+	for (let i = 0; i < globals.pendingTransactions.length; i++) {
+		const txHash = globals.pendingTransactions[i]
+		const confirmed = await globals.hades.isTransactionConfirmed(txHash)
+		if (confirmed) {
+			console.log('Transaction confirmed:', txHash)
+			globals.pendingTransactions.splice(i, 1)
+			break
+		}
+	}
+}
+
 async function demoSupply() {
 	const { symbol, address } = promptSymbol('ETH')
 	const balanceInfo = await globals.hades.getHTokenBalances(address, globals.loginAccount)
@@ -49,16 +73,20 @@ async function demoSupply() {
 
 	const value = literalToReal(inputAmount, balanceInfo.underlyingDecimals)
 	const hToken = await globals.hades.hToken(symbol, address)
+
+	let tx
 	if (symbol === 'ETH') {
-		await hToken.mint().send({ value: value.toString(), from: globals.loginAccount })
+		tx = hToken.mint().send({ value: value.toString(), from: globals.loginAccount })
 	} else {
-		await hToken.mint(inputAmount).send({ from: globals.loginAccount })
+		tx = hToken.mint(inputAmount).send({ from: globals.loginAccount })
 	}
+	await launchTransaction(tx)
 }
 
 async function demoEnterMarket() {
 	const { address } = promptSymbol('ETH')
-	await globals.hades.enterMarkets([address], globals.loginAccount)
+	const controller = await globals.hades.controller()
+	await launchTransaction(controller.enterMarkets([address]).send({ from: globals.loginAccount }))
 }
 
 async function demoBorrow() {
@@ -80,7 +108,7 @@ async function demoBorrow() {
 	const inputAmount = window.prompt(`Input borrow amount, limit: ${borrowLimit}`, '')
 	const realAmount = literalToReal(inputAmount, balanceInfo.underlyingDecimals)
 	const hToken = results[3]
-	await hToken.borrow(realAmount).send({ from: account })
+	await launchTransaction(hToken.borrow(realAmount).send({ from: account }))
 }
 
 async function demoRepay() {
@@ -102,7 +130,7 @@ async function demoRepay() {
 	const isContinue = window.confirm('Continue to repayBorrow?')
 	if (!isContinue) return
 
-	await hToken.repayBorrow(realAmount).send({ from: account })
+	await launchTransaction(hToken.repayBorrow(realAmount).send({ from: account }))
 }
 
 async function demoRedeem() {
@@ -118,7 +146,7 @@ async function demoRedeem() {
 	if (!inputAmount) return
 
 	const realAmount = literalToReal(inputAmount, 8)
-	await hToken.redeem(realAmount).send({ from: account })
+	await launchTransaction(hToken.redeem(realAmount).send({ from: account }))
 }
 
 async function increaseLPPower() {
@@ -146,25 +174,29 @@ async function increaseLPPower() {
 	const isContinue = window.confirm('Continue to mint?')
 	if (!isContinue) return
 
-	await distributor.mintExchangingPool(pid, realAmount).send({ from: account })
+	await launchTransaction(distributor.mintExchangingPool(pid, realAmount).send({ from: account }))
 }
 
 async function demoClaim() {
 	const pid = window.prompt('Input pool id', '0')
 	const distributor = await globals.hades.distributor()
-	await distributor.claim(pid).send({ from: globals.loginAccount })
+	await launchTransaction(distributor.claim(pid).send({ from: globals.loginAccount }))
 }
 
 function main() {
-	let hades = (globals.hades = new Hades())
+	let hades = (globals.hades = new Hades(window.HADES_CONFIG.networks.dev))
 
 	const bindClick = (id, handler) => (document.getElementById(id).onclick = handler)
 
 	const login = () => {
+		if (hades.chainId() !== Number(window.ethereum.chainId)) {
+			return alert('Wrong Network!')
+		}
+		hades.setProvider(window.web3.currentProvider)
+
 		const loginAccount = (globals.loginAccount = window.ethereum.selectedAddress)
 		console.log('Login Account:', loginAccount)
 
-		hades = globals.hades = new Hades(window.web3.currentProvider)
 		bindClick('liquidity', () => hades.getAccountLiquidity(loginAccount).then(console.log))
 		bindClick('balances', () => hades.getAccountBalances(loginAccount).then(console.log))
 		bindClick('miningLogin', () => hades.getPools(loginAccount).then(console.log))
@@ -182,6 +214,7 @@ function main() {
 	bindClick('overview', () => hades.getOverview().then(console.log))
 	bindClick('markets', () => processMarkets().then(console.log))
 	bindClick('mining', () => processPools().then(console.log))
+	bindClick('distributorStats', () => hades.getDistributorStats().then(console.log))
 	bindClick('prices', () => hades.getPrices().then(console.log))
 
 	bindClick('connect', () => {
@@ -193,13 +226,11 @@ function main() {
 		}
 	})
 
-	if (window.ethereum && window.ethereum.selectedAddress) {
-		login()
-	}
-
 	if (window.ethereum) {
 		window.ethereum.on('accountsChanged', login)
 	}
+
+	setInterval(confirmPendingTransactions, 10000)
 
 	processMarkets()
 	processPools()

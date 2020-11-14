@@ -7,9 +7,16 @@ const BLOCKS_PER_YEAR = 2102400
 const INITIAL_SUPPLY = 4200000
 
 class Hades {
-	constructor(provider) {
-		this._web3 = new Web3(provider || 'ws://localhost:8545')
-		this._orchestrator = new this._web3.eth.Contract(ABI_Orchestrator, '0x90F478808838EdB14dCFd6255a9Db7697D14d701')
+	constructor(options) {
+		this.options = options
+		this.setProvider(options.provider)
+		this.subscribeHDSPrice()
+	}
+
+	setProvider(provider) {
+		if (!provider) throw new Error('Invalid provider')
+		this._web3 = new Web3(provider)
+		this._orchestrator = this._createContractInstance(ABI_Orchestrator, this.options.orchestratorAddress)
 		this._dol = null
 		this._hds = null
 		this._reporter = null
@@ -17,32 +24,44 @@ class Hades {
 		this._distributor = null
 		this._hTokens = {}
 		this._lpTokens = {}
+		this._lastHDSPrice = 1
+	}
+
+	chainId() {
+		return this.options.chainId
+	}
+
+	async isTransactionConfirmed(hash) {
+		const tx = await this._web3.eth.getTransaction(hash)
+		return !!tx && !!tx.blockHash
 	}
 
 	async dol(raw) {
-		if (!this._dol) this._dol = await this._createContractInstance(ABI_DOL, 'getDOL')
+		if (!this._dol) this._dol = await this._createHadesContractInstance(ABI_DOL, 'getDOL')
 		return raw ? this._dol : this._dol.methods
 	}
 
 	async hds(raw) {
-		if (!this._hds) this._hds = await this._createContractInstance(ABI_HDS, 'getHDS')
+		if (!this._hds) this._hds = await this._createHadesContractInstance(ABI_HDS, 'getHDS')
 		return raw ? this._hds : this._hds.methods
 	}
 
 	async reporter(raw) {
-		if (!this._reporter) this._reporter = await this._createContractInstance(ABI_ProtocolReporter, 'getReporter')
+		if (!this._reporter) this._reporter = await this._createHadesContractInstance(ABI_ProtocolReporter, 'getReporter')
 		return raw ? this._reporter : this._reporter.methods
 	}
 
 	async controller(raw) {
 		if (!this._controller) {
-			this._controller = await this._createContractInstance(ABI_MarketController, 'getMarketController')
+			this._controller = await this._createHadesContractInstance(ABI_MarketController, 'getMarketController')
 		}
 		return raw ? this._controller : this._controller.methods
 	}
 
 	async distributor(raw) {
-		if (!this._distributor) this._distributor = await this._createContractInstance(ABI_HDSDistributor, 'getDistributor')
+		if (!this._distributor) {
+			this._distributor = await this._createHadesContractInstance(ABI_HDSDistributor, 'getDistributor')
+		}
 		this._distributor.methods._address = this._distributor._address
 		return raw ? this._distributor : this._distributor.methods
 	}
@@ -50,9 +69,9 @@ class Hades {
 	async hToken(underlyingSymbol, addr, raw) {
 		if (!this._hTokens[addr]) {
 			if (underlyingSymbol === 'ETH') {
-				this._hTokens[addr] = new this._web3.eth.Contract(ABI_HEther, addr)
+				this._hTokens[addr] = this._createContractInstance(ABI_HEther, addr)
 			} else {
-				this._hTokens[addr] = new this._web3.eth.Contract(ABI_HErc20, addr)
+				this._hTokens[addr] = this._createContractInstance(ABI_HErc20, addr)
 			}
 		}
 		return raw ? this._hTokens[addr] : this._hTokens[addr].methods
@@ -60,7 +79,7 @@ class Hades {
 
 	async lpToken(addr, raw) {
 		if (!this._lpTokens[addr]) {
-			this._lpTokens[addr] = new this._web3.eth.Contract(ABI_EIP20Interface, addr)
+			this._lpTokens[addr] = this._createContractInstance(ABI_EIP20Interface, addr)
 		}
 		return raw ? this._lpTokens[addr] : this._lpTokens[addr].methods
 	}
@@ -164,10 +183,7 @@ class Hades {
 		const reporter = await this.reporter()
 		const hds = await this.hds()
 		const results = await Promise.all([hds.balanceOf(account).call(), reporter.getAllHTokenBalances(account).call()])
-		const sheets = []
-		for (const item of results[1]) {
-			sheets.push(this._transformHTokenBalances(item))
-		}
+		const sheets = results[1].map(this._transformHTokenBalances.bind(this))
 		const hdsBalanceLiteral = Number(results[0]) / HDS_POINT
 		return {
 			sheets,
@@ -192,7 +208,7 @@ class Hades {
 		}
 
 		const results = await Promise.all(querys)
-		const hdsPrice = 1e18 // FIXME(query dynamic price)
+		const hdsPrice = this._lastHDSPrice * ((PRICE_POINT / HDS_POINT) * FIXED_POINT)
 		let ethPrice = 0
 		const latestBlockNum = Number(results[0].number)
 
@@ -208,10 +224,6 @@ class Hades {
 		const pools = []
 		for (const item of results[3]) {
 			const pool = Object.assign({}, item)
-			if (pool.status === 0) {
-				// POOL_STATUS_NOT_START
-				pool.countdown = Number(item.startBlock - latestBlockNum)
-			}
 			pool.totalPowerCorrect = Number(item.totalPower) + Number(item.accumulatedPower)
 			if (Number(pool.ptype) === 1) {
 				// POOL_TYPE_LENDING
@@ -223,7 +235,18 @@ class Hades {
 				pool.totalPowerNormalized = (pool.totalPowerCorrect * ethPrice) / FIXED_POINT
 				pool.underlyingPrice = ethPrice
 			}
-			pool.apy = (rewardsPerBlock * BLOCKS_PER_YEAR * hdsPrice) / FIXED_POINT / pool.totalPowerNormalized
+			const status = Number(pool.status)
+			if (status === 0) {
+				// POOL_STATUS_NOT_START
+				pool.countdown = Number(item.startBlock - latestBlockNum)
+			}
+			if (status === 1) {
+				// POOL_STATUS_ACTIVE
+				pool.apy = (rewardsPerBlock * BLOCKS_PER_YEAR * hdsPrice) / FIXED_POINT / pool.totalPowerNormalized
+			} else {
+				pool.apy = 0
+			}
+
 			pool.totalPowerNormalizedLiteral = pool.totalPowerNormalized / PRICE_POINT
 			pools.push(pool)
 		}
@@ -248,6 +271,11 @@ class Hades {
 		return { pools, my }
 	}
 
+	async getDistributorStats() {
+		const distributor = await this.distributor()
+		return distributor.getDistributorStats().call()
+	}
+
 	async getPrice(symbol) {
 		const prices = await this.getPrices()
 		for (const item of prices) {
@@ -266,7 +294,6 @@ class Hades {
 	async getAccountLiquidity(account) {
 		const controller = await this.controller()
 		const result = await controller.getAccountLiquidity(account).call()
-		console.log('getAccountL======', result)
 		if (result[0] !== '0') throw new Error('Contract query error')
 
 		const liquidity = Number(result[1])
@@ -281,10 +308,66 @@ class Hades {
 		}
 	}
 
-	async enterMarkets(addrs, account) {
-		const controller = await this.controller()
-		await controller.enterMarkets(addrs).send({ from: account })
+	subscribeHDSPrice() {
+		const ws = new WebSocket('wss://wsapi.jbex.com/openapi/quote/ws/v1')
+		const params = {
+			symbol: 'HDSUSDT',
+			topic: 'realtimes',
+			event: 'sub',
+			params: {
+				binary: false,
+			},
+		}
+
+		const self = this
+		ws.onmessage = (msg) => {
+			try {
+				const result = JSON.parse(msg.data)
+				if (result.data && result.data.length > 0 && result.data[0].c) {
+					self._lastHDSPrice = Number(result.data[0].c)
+					console.log('HDS price updated:', self._lastHDSPrice)
+				} else {
+					// console.log('unwanted msg:', result)
+				}
+			} catch (e) {
+				console.log('failed to parse msg:', e, msg)
+			}
+		}
+		ws.onopen = () => {
+			ws.send(JSON.stringify(params))
+			setInterval(() => {
+				ws.send(JSON.stringify({ ping: Date.now() }))
+			}, 60000)
+		}
 	}
+
+	// async getHDSPrice() {
+	// 	const self = this
+	// 	return new Promise((resolve, reject) => {
+	// 		const req = new XMLHttpRequest()
+	// 		req.open('get', HDS_PRICE_URL)
+	// 		req.onreadystatechange = () => {
+	// 			console.log('req:', req.readyState, req.status)
+	// 			if (req.readyState == 4 && req.status == 200) {
+	// 				console.log('response', req.responseText)
+	// 				try {
+	// 					const res = JSON.parse(req.responseText)
+	// 					if (res.price) {
+	// 						console.log('update hds price:', self._lastHDSPrice, Number(res.price))
+	// 						self._lastHDSPrice = Number(res.price)
+	// 						resolve(self._lastHDSPrice)
+	// 					} else {
+	// 						reject('No price field')
+	// 					}
+	// 				} catch (e) {
+	// 					console.log('failed to parse response:', e)
+	// 					reject('Not json format')
+	// 				}
+	// 			}
+	// 		}
+	// 		req.send()
+	// 	})
+	// }
 
 	// Private methods
 
@@ -299,8 +382,12 @@ class Hades {
 		return result
 	}
 
-	async _createContractInstance(abi, getAddrMethod) {
+	async _createHadesContractInstance(abi, getAddrMethod) {
 		const addr = await this._orchestrator.methods[getAddrMethod].call().call()
+		return new this._web3.eth.Contract(abi, addr)
+	}
+
+	_createContractInstance(abi, addr) {
 		return new this._web3.eth.Contract(abi, addr)
 	}
 
