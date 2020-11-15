@@ -425,6 +425,11 @@ window.ABI_HEther = [
         "internalType": "uint256",
         "name": "reduceAmount",
         "type": "uint256"
+      },
+      {
+        "internalType": "address payable",
+        "name": "recipient",
+        "type": "address"
       }
     ],
     "name": "_reduceReserves",
@@ -483,20 +488,6 @@ window.ABI_HEther = [
     ],
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "admin",
-    "outputs": [
-      {
-        "internalType": "address payable",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
   },
   {
     "inputs": [
@@ -651,20 +642,6 @@ window.ABI_HEther = [
   },
   {
     "inputs": [],
-    "name": "controller",
-    "outputs": [
-      {
-        "internalType": "contract MarketControllerInterface",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
     "name": "decimals",
     "outputs": [
       {
@@ -784,40 +761,12 @@ window.ABI_HEther = [
   },
   {
     "inputs": [],
-    "name": "interestRateStrategy",
-    "outputs": [
-      {
-        "internalType": "contract InterestRateStrategyInterface",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
     "name": "name",
     "outputs": [
       {
         "internalType": "string",
         "name": "",
         "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "pendingAdmin",
-    "outputs": [
-      {
-        "internalType": "address payable",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -1012,23 +961,8 @@ window.ABI_HEther = [
   {
     "inputs": [
       {
-        "internalType": "address payable",
-        "name": "_admin",
-        "type": "address"
-      },
-      {
-        "internalType": "contract MarketControllerInterface",
-        "name": "_controller",
-        "type": "address"
-      },
-      {
-        "internalType": "contract InterestRateStrategyInterface",
-        "name": "_interestRateStrategy",
-        "type": "address"
-      },
-      {
-        "internalType": "contract DistributorInterface",
-        "name": "_distributor",
+        "internalType": "address",
+        "name": "_orchestrator",
         "type": "address"
       },
       {
@@ -1055,23 +989,8 @@ window.ABI_HEther = [
   {
     "inputs": [
       {
-        "internalType": "address payable",
-        "name": "_admin",
-        "type": "address"
-      },
-      {
-        "internalType": "contract MarketControllerInterface",
-        "name": "_controller",
-        "type": "address"
-      },
-      {
-        "internalType": "contract InterestRateStrategyInterface",
-        "name": "_interestRateStrategy",
-        "type": "address"
-      },
-      {
-        "internalType": "contract DistributorInterface",
-        "name": "_distributor",
+        "internalType": "address",
+        "name": "_orchestrator",
         "type": "address"
       },
       {
