@@ -29,8 +29,8 @@ window.ABI_ProtocolReporter = [
   {
     "inputs": [
       {
-        "internalType": "contract HToken",
-        "name": "hToken",
+        "internalType": "address",
+        "name": "hTokenAddr",
         "type": "address"
       }
     ],
@@ -247,8 +247,8 @@ window.ABI_ProtocolReporter = [
   {
     "inputs": [
       {
-        "internalType": "contract HToken",
-        "name": "hToken",
+        "internalType": "address",
+        "name": "hTokenAddr",
         "type": "address"
       },
       {
@@ -376,8 +376,8 @@ window.ABI_ProtocolReporter = [
   {
     "inputs": [
       {
-        "internalType": "contract HToken",
-        "name": "hToken",
+        "internalType": "address",
+        "name": "hTokenAddr",
         "type": "address"
       }
     ],
@@ -444,7 +444,7 @@ window.ABI_ProtocolReporter = [
   {
     "inputs": [
       {
-        "internalType": "contract ControllerInterface",
+        "internalType": "contract MarketControllerInterface",
         "name": "controller",
         "type": "address"
       },
@@ -459,7 +459,7 @@ window.ABI_ProtocolReporter = [
       {
         "components": [
           {
-            "internalType": "contract HToken[]",
+            "internalType": "address[]",
             "name": "markets",
             "type": "address[]"
           },
@@ -477,285 +477,6 @@ window.ABI_ProtocolReporter = [
         "internalType": "struct ProtocolReporter.AccountLimits",
         "name": "",
         "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract Governor",
-        "name": "governor",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "voter",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "proposalIds",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "getGovReceipts",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "proposalId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "hasVoted",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "support",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint96",
-            "name": "votes",
-            "type": "uint96"
-          }
-        ],
-        "internalType": "struct ProtocolReporter.GovReceipt[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract Governor",
-        "name": "governor",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "proposalIds",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "getGovProposals",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "proposalId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "proposer",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "eta",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address[]",
-            "name": "targets",
-            "type": "address[]"
-          },
-          {
-            "internalType": "uint256[]",
-            "name": "values",
-            "type": "uint256[]"
-          },
-          {
-            "internalType": "string[]",
-            "name": "signatures",
-            "type": "string[]"
-          },
-          {
-            "internalType": "bytes[]",
-            "name": "calldatas",
-            "type": "bytes[]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startBlock",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endBlock",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "forVotes",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "againstVotes",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "canceled",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "executed",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct ProtocolReporter.GovProposal[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract HDS",
-        "name": "hds",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getCompBalanceMetadata",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "balance",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "votes",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "delegate",
-            "type": "address"
-          }
-        ],
-        "internalType": "struct ProtocolReporter.CompBalanceMetadata",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract HDS",
-        "name": "hds",
-        "type": "address"
-      },
-      {
-        "internalType": "contract ControllerInterface",
-        "name": "controller",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getCompBalanceMetadataExt",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "balance",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "votes",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "delegate",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "allocated",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct ProtocolReporter.CompBalanceMetadataExt",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract HDS",
-        "name": "hds",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint32[]",
-        "name": "blockNumbers",
-        "type": "uint32[]"
-      }
-    ],
-    "name": "getCompVotes",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "blockNumber",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "votes",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct ProtocolReporter.CompVotes[]",
-        "name": "",
-        "type": "tuple[]"
       }
     ],
     "stateMutability": "view",

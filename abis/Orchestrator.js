@@ -9,14 +9,76 @@ window.ABI_Orchestrator = [
     "inputs": [
       {
         "indexed": false,
-        "internalType": "bytes32",
-        "name": "id",
-        "type": "bytes32"
+        "internalType": "string",
+        "name": "key",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldAddr",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newAddr",
+        "type": "address"
+      }
+    ],
+    "name": "ContractChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "key",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proxy",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldImpl",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newImpl",
+        "type": "address"
+      }
+    ],
+    "name": "ProxyChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "key",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "proxy",
+        "type": "address"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "newAddress",
+        "name": "impl",
         "type": "address"
       }
     ],
@@ -25,10 +87,10 @@ window.ABI_Orchestrator = [
   },
   {
     "inputs": [],
-    "name": "admin",
+    "name": "guardian",
     "outputs": [
       {
-        "internalType": "address payable",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -54,9 +116,19 @@ window.ABI_Orchestrator = [
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "impls",
-        "type": "address[]"
+        "internalType": "address",
+        "name": "_controllerImpl",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_distributorImpl",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_council",
+        "type": "address"
       },
       {
         "internalType": "address",
@@ -103,12 +175,12 @@ window.ABI_Orchestrator = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "hTokenAddr",
+        "name": "hToken",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "underlyingAddr",
+        "name": "underlying",
         "type": "address"
       },
       {
@@ -130,26 +202,17 @@ window.ABI_Orchestrator = [
         "internalType": "string",
         "name": "anchor",
         "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startBlock",
+        "type": "uint256"
       }
     ],
-    "name": "addToken",
+    "name": "createMarket",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getAdmin",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
   },
   {
     "inputs": [],
@@ -194,19 +257,6 @@ window.ABI_Orchestrator = [
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_oracle",
-        "type": "address"
-      }
-    ],
-    "name": "setOracle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "getInterestRateStrategy",
     "outputs": [
@@ -219,19 +269,6 @@ window.ABI_Orchestrator = [
     "stateMutability": "view",
     "type": "function",
     "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_interestRateStrategy",
-        "type": "address"
-      }
-    ],
-    "name": "setInterestRateStrategy",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [],
@@ -248,48 +285,8 @@ window.ABI_Orchestrator = [
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_controller",
-        "type": "address"
-      }
-    ],
-    "name": "setMarketControllerImpl",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "getDistributor",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_distributor",
-        "type": "address"
-      }
-    ],
-    "name": "setDistributorImpl",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getGovernor",
     "outputs": [
       {
         "internalType": "address",
@@ -316,6 +313,34 @@ window.ABI_Orchestrator = [
     "constant": true
   },
   {
+    "inputs": [],
+    "name": "getCouncil",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "getDemocracy",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -329,17 +354,88 @@ window.ABI_Orchestrator = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getTimelock",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "_distributor",
         "type": "address"
       }
     ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "name": "setDistributorImpl",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_controller",
+        "type": "address"
+      }
+    ],
+    "name": "setMarketControllerImpl",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_oracle",
+        "type": "address"
+      }
+    ],
+    "name": "setOracle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_interestRateStrategy",
+        "type": "address"
+      }
+    ],
+    "name": "setInterestRateStrategy",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_council",
+        "type": "address"
+      }
+    ],
+    "name": "setCouncil",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_democracy",
+        "type": "address"
+      }
+    ],
+    "name": "setDemocracy",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "abdicate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ]

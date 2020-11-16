@@ -202,25 +202,6 @@ window.ABI_MarketController = [
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "oldPauseGuardian",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "newPauseGuardian",
-        "type": "address"
-      }
-    ],
-    "name": "NewPauseGuardian",
-    "type": "event"
-  },
-  {
     "inputs": [],
     "name": "_borrowGuardianPaused",
     "outputs": [
@@ -265,20 +246,6 @@ window.ABI_MarketController = [
     "outputs": [
       {
         "internalType": "contract HToken",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "admin",
-    "outputs": [
-      {
-        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -472,20 +439,6 @@ window.ABI_MarketController = [
   },
   {
     "inputs": [],
-    "name": "superior",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
     "name": "transferGuardianPaused",
     "outputs": [
       {
@@ -522,7 +475,7 @@ window.ABI_MarketController = [
     "name": "getAssetsIn",
     "outputs": [
       {
-        "internalType": "contract HToken[]",
+        "internalType": "address[]",
         "name": "",
         "type": "address[]"
       }
@@ -536,7 +489,7 @@ window.ABI_MarketController = [
     "name": "getAllMarkets",
     "outputs": [
       {
-        "internalType": "contract HToken[]",
+        "internalType": "address[]",
         "name": "",
         "type": "address[]"
       }
@@ -654,8 +607,9 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -711,8 +665,9 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -739,8 +694,9 @@ window.ABI_MarketController = [
     ],
     "name": "redeemVerify",
     "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "pure",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -825,8 +781,9 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -897,8 +854,9 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -974,8 +932,9 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -1041,8 +1000,9 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -1190,7 +1150,7 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "name": "_setCloseFactor",
+    "name": "setCloseFactor",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1214,7 +1174,7 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "name": "_setCollateralFactor",
+    "name": "setCollateralFactor",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1233,7 +1193,7 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "name": "_setMaxAssets",
+    "name": "setMaxAssets",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1252,7 +1212,7 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "name": "_setLiquidationIncentive",
+    "name": "setLiquidationIncentive",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1271,7 +1231,7 @@ window.ABI_MarketController = [
         "type": "address"
       }
     ],
-    "name": "_supportMarket",
+    "name": "supportMarket",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1280,18 +1240,17 @@ window.ABI_MarketController = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "newPauseGuardian",
+        "name": "hToken",
         "type": "address"
-      }
-    ],
-    "name": "_setPauseGuardian",
-    "outputs": [
+      },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "state",
+        "type": "bool"
       }
     ],
+    "name": "setMintPaused",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1308,38 +1267,8 @@ window.ABI_MarketController = [
         "type": "bool"
       }
     ],
-    "name": "_setMintPaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "state",
-        "type": "bool"
-      }
-    ],
-    "name": "_setBorrowPaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "name": "setBorrowPaused",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1351,14 +1280,8 @@ window.ABI_MarketController = [
         "type": "bool"
       }
     ],
-    "name": "_setTransferPaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "name": "setTransferPaused",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1370,31 +1293,7 @@ window.ABI_MarketController = [
         "type": "bool"
       }
     ],
-    "name": "_setSeizePaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_hDol",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "_expandDOLSupply",
+    "name": "setSeizePaused",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1412,7 +1311,25 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "name": "_reduceDOLSupply",
+    "name": "expandDOLSupply",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_hDol",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "reduceDOLSupply",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

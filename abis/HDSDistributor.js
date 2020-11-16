@@ -85,61 +85,12 @@ window.ABI_HDSDistributor = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startBlock",
-        "type": "uint256"
-      }
-    ],
-    "name": "createLendingPool",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "lpToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startBlock",
-        "type": "uint256"
-      }
-    ],
-    "name": "createExchangingPool",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint32",
         "name": "id",
         "type": "uint32"
       }
     ],
     "name": "openPool",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint32",
-        "name": "id",
-        "type": "uint32"
-      }
-    ],
-    "name": "closePool",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -269,7 +220,7 @@ window.ABI_HDSDistributor = [
             "type": "uint256"
           }
         ],
-        "internalType": "struct DistributorInterface.Pool",
+        "internalType": "struct HDSDistributor.Pool",
         "name": "",
         "type": "tuple"
       }
@@ -335,7 +286,7 @@ window.ABI_HDSDistributor = [
             "type": "uint256"
           }
         ],
-        "internalType": "struct DistributorInterface.Pool[]",
+        "internalType": "struct HDSDistributor.Pool[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -391,7 +342,7 @@ window.ABI_HDSDistributor = [
             "type": "uint256"
           }
         ],
-        "internalType": "struct DistributorInterface.AccountRecord[]",
+        "internalType": "struct HDSDistributor.AccountRecord[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -438,7 +389,7 @@ window.ABI_HDSDistributor = [
             "type": "uint256"
           }
         ],
-        "internalType": "struct DistributorInterface.AccountRecord",
+        "internalType": "struct HDSDistributor.AccountRecord",
         "name": "",
         "type": "tuple"
       }
@@ -479,7 +430,7 @@ window.ABI_HDSDistributor = [
             "type": "uint32"
           }
         ],
-        "internalType": "struct DistributorInterface.DistributorStats",
+        "internalType": "struct HDSDistributor.DistributorStats",
         "name": "",
         "type": "tuple"
       }
@@ -487,5 +438,54 @@ window.ABI_HDSDistributor = [
     "stateMutability": "view",
     "type": "function",
     "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "hToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startBlock",
+        "type": "uint256"
+      }
+    ],
+    "name": "createLendingPool",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "lpToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startBlock",
+        "type": "uint256"
+      }
+    ],
+    "name": "createExchangingPool",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint32",
+        "name": "id",
+        "type": "uint32"
+      }
+    ],
+    "name": "closePool",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ]

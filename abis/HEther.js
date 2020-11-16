@@ -178,82 +178,6 @@ window.ABI_HEther = [
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "oldAdmin",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "newAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "NewAdmin",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "contract MarketControllerInterface",
-        "name": "oldMarketController",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract MarketControllerInterface",
-        "name": "newMarketController",
-        "type": "address"
-      }
-    ],
-    "name": "NewMarketController",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "contract InterestRateStrategyInterface",
-        "name": "oldInterestRateStrategy",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract InterestRateStrategyInterface",
-        "name": "newInterestRateStrategy",
-        "type": "address"
-      }
-    ],
-    "name": "NewMarketInterestRateStrategy",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "oldPendingAdmin",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "newPendingAdmin",
-        "type": "address"
-      }
-    ],
-    "name": "NewPendingAdmin",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "oldReserveFactorMantissa",
         "type": "uint256"
@@ -404,63 +328,6 @@ window.ABI_HEther = [
     ],
     "name": "Transfer",
     "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "_anchorSymbol",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "reduceAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address payable",
-        "name": "recipient",
-        "type": "address"
-      }
-    ],
-    "name": "_reduceReserves",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newReserveFactorMantissa",
-        "type": "uint256"
-      }
-    ],
-    "name": "_setReserveFactor",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [],
@@ -775,6 +642,44 @@ window.ABI_HEther = [
   },
   {
     "inputs": [],
+    "name": "orchestrator",
+    "outputs": [
+      {
+        "internalType": "contract OrchestratorInterface",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "reduceAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address payable",
+        "name": "recipient",
+        "type": "address"
+      }
+    ],
+    "name": "reduceReserves",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "reserveFactorMantissa",
     "outputs": [
       {
@@ -806,6 +711,25 @@ window.ABI_HEther = [
       }
     ],
     "name": "seize",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "newReserveFactorMantissa",
+        "type": "uint256"
+      }
+    ],
+    "name": "setReserveFactor",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1010,8 +934,62 @@ window.ABI_HEther = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_orchestrator",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "mint",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function",
+    "payable": true
+  },
+  {
+    "inputs": [],
+    "name": "repayBorrow",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function",
+    "payable": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "borrower",
+        "type": "address"
+      }
+    ],
+    "name": "repayBorrowBehalf",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function",
+    "payable": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "borrower",
+        "type": "address"
+      },
+      {
+        "internalType": "contract HToken",
+        "name": "hTokenCollateral",
+        "type": "address"
+      }
+    ],
+    "name": "liquidateBorrow",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function",
@@ -1073,46 +1051,5 @@ window.ABI_HEther = [
     ],
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "repayBorrow",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      }
-    ],
-    "name": "repayBorrowBehalf",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      },
-      {
-        "internalType": "contract HToken",
-        "name": "hTokenCollateral",
-        "type": "address"
-      }
-    ],
-    "name": "liquidateBorrow",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-    "payable": true
   }
 ]
