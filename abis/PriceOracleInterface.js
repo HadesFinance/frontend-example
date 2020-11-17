@@ -1,5 +1,30 @@
 window.ABI_PriceOracleInterface = [
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "symbol",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "NewPriceFeedAddress",
+    "type": "event"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",

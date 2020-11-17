@@ -45,19 +45,13 @@ window.ABI_Orchestrator = [
         "type": "address"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
-        "name": "oldImpl",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "newImpl",
+        "name": "impl",
         "type": "address"
       }
     ],
-    "name": "ProxyChanged",
+    "name": "ProxyCreated",
     "type": "event"
   },
   {
@@ -76,13 +70,19 @@ window.ABI_Orchestrator = [
         "type": "address"
       },
       {
-        "indexed": true,
+        "indexed": false,
         "internalType": "address",
-        "name": "impl",
+        "name": "oldImpl",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newImpl",
         "type": "address"
       }
     ],
-    "name": "ProxyCreated",
+    "name": "ProxyUpgraded",
     "type": "event"
   },
   {
@@ -96,8 +96,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -110,8 +109,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [
@@ -225,8 +223,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -239,8 +236,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -253,8 +249,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -267,8 +262,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -281,8 +275,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -295,8 +288,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -309,8 +301,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -323,8 +314,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [],
@@ -337,8 +327,7 @@ window.ABI_Orchestrator = [
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
     "inputs": [
