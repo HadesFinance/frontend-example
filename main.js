@@ -184,12 +184,13 @@ async function demoClaim() {
 }
 
 function main() {
-	let hades = (globals.hades = new Hades(window.HADES_CONFIG.networks.dev))
+	const network = window.HADES_CONFIG.networks.dev
+	let hades = (globals.hades = new Hades(network))
 
 	const bindClick = (id, handler) => (document.getElementById(id).onclick = handler)
 
 	const login = () => {
-		if (hades.chainId() !== Number(window.ethereum.chainId)) {
+		if (hades.chainId() <= 42 && hades.chainId() !== Number(window.ethereum.chainId)) {
 			return alert('Wrong Network!')
 		}
 		hades.setProvider(window.web3.currentProvider)

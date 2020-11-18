@@ -115,7 +115,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -128,7 +129,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -141,7 +143,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -170,7 +173,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -183,7 +187,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -202,7 +207,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -215,7 +221,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -228,7 +235,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -247,7 +255,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -266,7 +275,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -279,7 +289,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -292,7 +303,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -305,7 +317,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -342,7 +355,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -385,7 +399,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -544,7 +559,8 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -568,6 +584,7 @@ window.ABI_HDS = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   }
 ]

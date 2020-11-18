@@ -10,7 +10,8 @@ window.ABI_ProtocolReporter = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -134,7 +135,8 @@ window.ABI_ProtocolReporter = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -239,7 +241,8 @@ window.ABI_ProtocolReporter = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -305,7 +308,8 @@ window.ABI_ProtocolReporter = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -366,7 +370,8 @@ window.ABI_ProtocolReporter = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -402,7 +407,8 @@ window.ABI_ProtocolReporter = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -432,7 +438,8 @@ window.ABI_ProtocolReporter = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -473,6 +480,7 @@ window.ABI_ProtocolReporter = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   }
 ]

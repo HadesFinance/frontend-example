@@ -41,7 +41,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -54,7 +55,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -67,7 +69,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -80,7 +83,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -93,7 +97,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -252,7 +257,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -317,7 +323,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -330,7 +337,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -371,7 +379,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -417,7 +426,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -457,7 +467,8 @@ window.ABI_HDSDistributor = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [

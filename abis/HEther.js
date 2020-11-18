@@ -340,7 +340,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -377,7 +378,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -390,7 +392,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -433,7 +436,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -452,7 +456,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -471,7 +476,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -484,7 +490,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -497,7 +504,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -510,7 +518,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -523,7 +532,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -536,7 +546,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -570,7 +581,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -583,7 +595,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -596,7 +609,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -609,7 +623,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -622,7 +637,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -635,7 +651,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -672,7 +689,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -733,7 +751,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -746,7 +765,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -759,7 +779,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -772,7 +793,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -785,7 +807,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -798,7 +821,8 @@ window.ABI_HEther = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -855,7 +879,8 @@ window.ABI_HEther = [
   },
   {
     "stateMutability": "payable",
-    "type": "receive"
+    "type": "receive",
+    "payable": true
   },
   {
     "inputs": [
@@ -903,14 +928,16 @@ window.ABI_HEther = [
     "name": "mint",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
+    "type": "function",
+    "payable": true
   },
   {
     "inputs": [],
     "name": "repayBorrow",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
+    "type": "function",
+    "payable": true
   },
   {
     "inputs": [
@@ -923,7 +950,8 @@ window.ABI_HEther = [
     "name": "repayBorrowBehalf",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
+    "type": "function",
+    "payable": true
   },
   {
     "inputs": [
@@ -941,7 +969,8 @@ window.ABI_HEther = [
     "name": "liquidateBorrow",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
+    "type": "function",
+    "payable": true
   },
   {
     "inputs": [

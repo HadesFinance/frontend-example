@@ -136,7 +136,8 @@ window.ABI_Council = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -149,7 +150,8 @@ window.ABI_Council = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -168,7 +170,8 @@ window.ABI_Council = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -181,7 +184,8 @@ window.ABI_Council = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [],
@@ -194,11 +198,13 @@ window.ABI_Council = [
       }
     ],
     "stateMutability": "view",
-    "type": "function"
+    "type": "function",
+    "constant": true
   },
   {
     "stateMutability": "payable",
-    "type": "receive"
+    "type": "receive",
+    "payable": true
   },
   {
     "inputs": [
