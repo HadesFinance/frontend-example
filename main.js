@@ -184,7 +184,7 @@ async function demoClaim() {
 }
 
 function main() {
-	const network = window.HADES_CONFIG.networks.dev
+	const network = window.HADES_CONFIG.networks.test
 	let hades = (globals.hades = new Hades(network))
 
 	const bindClick = (id, handler) => (document.getElementById(id).onclick = handler)

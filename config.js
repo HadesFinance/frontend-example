@@ -8,7 +8,7 @@ window.HADES_CONFIG = {
 		test: {
 			provider: 'ws://139.180.193.123:8545',
 			chainId: 0x539,
-			orchestratorAddress: '0x5e8a9E2832d8B35E3933f07Cf65e371837b30BDe',
+			orchestratorAddress: '0xc01F7c458bcF82262CCd8e41387aeFA20a5635cd',
 		},
 		kovan: {
 			provider: 'https://kovan.infura.io/v3/d3f8f9c2141b4561b6c7f23a34466d7c',

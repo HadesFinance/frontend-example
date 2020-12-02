@@ -247,6 +247,8 @@ class Hades {
 				pool.apy = 0
 			}
 
+			const lpToken = await this.lpToken(pool.tokenAddr)
+			pool.title = await lpToken.symbol().call()
 			pool.totalPowerNormalizedLiteral = pool.totalPowerNormalized / PRICE_POINT
 			pools.push(pool)
 		}
