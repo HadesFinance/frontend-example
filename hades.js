@@ -162,6 +162,7 @@ class Hades {
 			market.borrowRatePerYear = (Number(item.borrowRatePerBlock) * BLOCKS_PER_YEAR) / FIXED_POINT
 			market.supplyRatePerYear = (Number(item.supplyRatePerBlock) * BLOCKS_PER_YEAR) / FIXED_POINT
 			market.totalCashLiteral = Number(item.totalCash) / Math.pow(10, item.underlyingDecimals)
+			market.totalSupplyLiteral = Number(item.totalSupply) / Math.pow(10, 8)
 			market.collateralFactorLiteral = Number(item.collateralFactorMantissa) / FIXED_POINT
 			market.reserveFactorLiteral = Number(item.reserveFactorMantissa) / FIXED_POINT
 
@@ -221,6 +222,13 @@ class Hades {
 		}
 		const rewardsPerBlock = Number(results[2])
 
+		const lendingPoolTitles = ['ETH', 'DOL', 'zBTC']
+		const exchangingPoolTitles = ['ETH/DOL', 'ETH/HDS']
+
+		const dol = await this.dol(true)
+		const hds = await this.hds(true)
+		const exchangingTokens = [dol.options.address, hds.options.address]
+
 		const pools = []
 		for (const item of results[3]) {
 			const pool = Object.assign({}, item)
@@ -230,10 +238,20 @@ class Hades {
 				const price = priceMap.get(item.tokenAddr)
 				pool.totalPowerNormalized = (pool.totalPowerCorrect * price) / FIXED_POINT
 				pool.underlyingPrice = price
+				pool.title = lendingPoolTitles.shift()
 			} else {
 				// POOL_TYPE_EXCHANGING
 				pool.totalPowerNormalized = (pool.totalPowerCorrect * ethPrice) / FIXED_POINT
 				pool.underlyingPrice = ethPrice
+				pool.title = exchangingPoolTitles.shift()
+
+				let baseUrl
+				if (this.chainId() == 1) {
+					baseUrl = 'https://app.uniswap.org/#/add/ETH/'
+				} else {
+					baseUrl = 'https://faucet.hades.finance/#/add/ETH/'
+				}
+				pool.lpUrl = baseUrl + exchangingTokens.shift()
 			}
 			const status = Number(pool.status)
 			if (status === 0) {
@@ -246,9 +264,6 @@ class Hades {
 			} else {
 				pool.apy = 0
 			}
-
-			const lpToken = await this.lpToken(pool.tokenAddr)
-			pool.title = await lpToken.symbol().call()
 			pool.totalPowerNormalizedLiteral = pool.totalPowerNormalized / PRICE_POINT
 			pools.push(pool)
 		}
@@ -290,7 +305,13 @@ class Hades {
 
 	async getPrices() {
 		const reporter = await this.reporter()
-		return await reporter.getUnderlyingPrices().call()
+		const prices = await reporter.getUnderlyingPrices().call()
+		return prices
+			.filter((item) => item.anchorSymbol !== 'USD')
+			.map((item) => {
+				const underlyingPriceLiteral = Number(item.underlyingPrice) / 1e8
+				return Object.assign({}, item, { underlyingPriceLiteral })
+			})
 	}
 
 	async getAccountLiquidity(account) {
