@@ -15,7 +15,26 @@ window.ABI_Council = [
         "type": "uint256"
       }
     ],
-    "name": "MaxMembersUpdated",
+    "name": "NewExecutionDelay",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "oldVal",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newVal",
+        "type": "uint256"
+      }
+    ],
+    "name": "NewMaxMembers",
     "type": "event"
   },
   {
@@ -29,6 +48,25 @@ window.ABI_Council = [
       }
     ],
     "name": "NewTermStarted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "name": "ProposalCanceled",
     "type": "event"
   },
   {
@@ -72,25 +110,24 @@ window.ABI_Council = [
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "startBlock",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "endBlock",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "string",
         "name": "desc",
         "type": "string"
       }
     ],
     "name": "ProposalCreated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      }
-    ],
-    "name": "ProposalDeleted",
     "type": "event"
   },
   {
@@ -114,6 +151,38 @@ window.ABI_Council = [
         "internalType": "uint256",
         "name": "id",
         "type": "uint256"
+      }
+    ],
+    "name": "ProposalExpired",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "eta",
+        "type": "uint256"
+      }
+    ],
+    "name": "ProposalQueued",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
       },
       {
         "indexed": false,
@@ -127,7 +196,7 @@ window.ABI_Council = [
   },
   {
     "inputs": [],
-    "name": "maxMembers",
+    "name": "GRACE_PERIOD",
     "outputs": [
       {
         "internalType": "uint256",
@@ -141,7 +210,91 @@ window.ABI_Council = [
   },
   {
     "inputs": [],
-    "name": "maxVotingPeriod",
+    "name": "MAX_EXECUTION_DELAY",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "MAX_VOTING_DELAY",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "MAX_VOTING_PERIOD",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "MIN_MEMBERS",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "MIN_VOTING_PERIOD",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "executionDelay",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "maxMembers",
     "outputs": [
       {
         "internalType": "uint256",
@@ -175,12 +328,12 @@ window.ABI_Council = [
   },
   {
     "inputs": [],
-    "name": "minMembers",
+    "name": "orchestrator",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "contract OrchestratorInterface",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -243,12 +396,12 @@ window.ABI_Council = [
       },
       {
         "internalType": "uint256",
-        "name": "startBlock",
+        "name": "delay",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "endBlock",
+        "name": "votingPeriod",
         "type": "uint256"
       },
       {
@@ -278,6 +431,123 @@ window.ABI_Council = [
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "execute",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMembers",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getProposal",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "proposer",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "target",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "signature",
+            "type": "string"
+          },
+          {
+            "internalType": "bytes",
+            "name": "params",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endBlock",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "startBlock",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "eta",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ayes",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum Council.ProposalState",
+            "name": "state",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct Council.Proposal",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "cancel",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address[]",
         "name": "newMembers",
         "type": "address[]"
@@ -292,11 +562,24 @@ window.ABI_Council = [
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "count",
+        "name": "val",
         "type": "uint256"
       }
     ],
     "name": "setMaxMembers",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "val",
+        "type": "uint256"
+      }
+    ],
+    "name": "setExecutionDelay",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

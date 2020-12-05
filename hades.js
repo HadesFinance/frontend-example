@@ -222,7 +222,7 @@ class Hades {
 		}
 		const rewardsPerBlock = Number(results[2])
 
-		const lendingPoolTitles = ['ETH', 'DOL', 'zBTC']
+		const lendingPoolTitles = ['ETH', 'DOL', 'renBTC']
 		const exchangingPoolTitles = ['ETH/DOL', 'ETH/HDS']
 
 		const dol = await this.dol(true)
@@ -233,7 +233,8 @@ class Hades {
 		for (const item of results[3]) {
 			const pool = Object.assign({}, item)
 			pool.totalPowerCorrect = Number(item.totalPower) + Number(item.accumulatedPower)
-			if (Number(pool.ptype) === 1) {
+			const ptype = Number(pool.ptype)
+			if (ptype === 1) {
 				// POOL_TYPE_LENDING
 				const price = priceMap.get(item.tokenAddr)
 				pool.totalPowerNormalized = (pool.totalPowerCorrect * price) / FIXED_POINT
@@ -241,7 +242,7 @@ class Hades {
 				pool.title = lendingPoolTitles.shift()
 			} else {
 				// POOL_TYPE_EXCHANGING
-				pool.totalPowerNormalized = (pool.totalPowerCorrect * ethPrice) / FIXED_POINT
+				pool.totalPowerNormalized = (pool.totalPowerCorrect * ethPrice) / PRICE_POINT
 				pool.underlyingPrice = ethPrice
 				pool.title = exchangingPoolTitles.shift()
 
@@ -253,12 +254,12 @@ class Hades {
 				}
 				pool.lpUrl = baseUrl + exchangingTokens.shift()
 			}
-			const status = Number(pool.status)
-			if (status === 0) {
+			const state = Number(pool.state)
+			if (state === 0) {
 				// POOL_STATUS_NOT_START
 				pool.countdown = Number(item.startBlock - latestBlockNum)
 			}
-			if (status === 1) {
+			if (state === 1) {
 				// POOL_STATUS_ACTIVE
 				pool.apy = (rewardsPerBlock * BLOCKS_PER_YEAR * hdsPrice) / FIXED_POINT / pool.totalPowerNormalized
 			} else {
@@ -317,10 +318,8 @@ class Hades {
 	async getAccountLiquidity(account) {
 		const controller = await this.controller()
 		const result = await controller.getAccountLiquidity(account).call()
-		if (result[0] !== '0') throw new Error('Contract query error')
-
-		const liquidity = Number(result[1])
-		const shortfall = Number(result[2])
+		const liquidity = Number(result[0])
+		const shortfall = Number(result[1])
 		const liquidityLiteral = liquidity / PRICE_POINT
 		const shortfallLiteral = liquidity / PRICE_POINT
 		return {

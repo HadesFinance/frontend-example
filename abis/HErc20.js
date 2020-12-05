@@ -346,13 +346,7 @@ window.ABI_HErc20 = [
   {
     "inputs": [],
     "name": "accrueInterest",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -536,20 +530,6 @@ window.ABI_HErc20 = [
     "constant": true
   },
   {
-    "inputs": [],
-    "name": "exchangeRateStored",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -559,11 +539,6 @@ window.ABI_HErc20 = [
     ],
     "name": "getAccountSnapshot",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
       {
         "internalType": "uint256",
         "name": "",
@@ -655,6 +630,48 @@ window.ABI_HErc20 = [
     "constant": true
   },
   {
+    "inputs": [],
+    "name": "part1",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "part2",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
+    "name": "part3",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -668,13 +685,7 @@ window.ABI_HErc20 = [
       }
     ],
     "name": "reduceReserves",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -711,13 +722,7 @@ window.ABI_HErc20 = [
       }
     ],
     "name": "seize",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -730,13 +735,7 @@ window.ABI_HErc20 = [
       }
     ],
     "name": "setReserveFactor",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -771,20 +770,6 @@ window.ABI_HErc20 = [
   {
     "inputs": [],
     "name": "totalBorrows",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "totalBorrowsCurrent",
     "outputs": [
       {
         "internalType": "uint256",
@@ -917,6 +902,24 @@ window.ABI_HErc20 = [
         "internalType": "string",
         "name": "_anchorSymbol",
         "type": "string"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_parts",
+        "type": "address[]"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_orchestrator",
+        "type": "address"
       }
     ],
     "name": "initialize",
@@ -945,19 +948,11 @@ window.ABI_HErc20 = [
         "internalType": "string",
         "name": "_anchor",
         "type": "string"
-      }
-    ],
-    "name": "initialize",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+      },
       {
-        "internalType": "address",
-        "name": "_orchestrator",
-        "type": "address"
+        "internalType": "address[]",
+        "name": "_parts",
+        "type": "address[]"
       }
     ],
     "name": "initialize",
@@ -974,13 +969,7 @@ window.ABI_HErc20 = [
       }
     ],
     "name": "mint",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -993,32 +982,7 @@ window.ABI_HErc20 = [
       }
     ],
     "name": "redeem",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "redeemAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "redeemUnderlying",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1031,13 +995,7 @@ window.ABI_HErc20 = [
       }
     ],
     "name": "borrow",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1050,13 +1008,7 @@ window.ABI_HErc20 = [
       }
     ],
     "name": "repayBorrow",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1074,13 +1026,7 @@ window.ABI_HErc20 = [
       }
     ],
     "name": "repayBorrowBehalf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1097,19 +1043,13 @@ window.ABI_HErc20 = [
         "type": "uint256"
       },
       {
-        "internalType": "contract HToken",
+        "internalType": "address",
         "name": "hTokenCollateral",
         "type": "address"
       }
     ],
     "name": "liquidateBorrow",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1122,13 +1062,7 @@ window.ABI_HErc20 = [
       }
     ],
     "name": "addReserves",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   }

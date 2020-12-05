@@ -104,9 +104,9 @@ window.ABI_ProtocolReporter = [
             "type": "uint256"
           },
           {
-            "internalType": "bool",
-            "name": "isListed",
-            "type": "bool"
+            "internalType": "uint256",
+            "name": "state",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -210,9 +210,9 @@ window.ABI_ProtocolReporter = [
             "type": "uint256"
           },
           {
-            "internalType": "bool",
-            "name": "isListed",
-            "type": "bool"
+            "internalType": "uint256",
+            "name": "state",
+            "type": "uint256"
           },
           {
             "internalType": "uint256",
@@ -435,48 +435,6 @@ window.ABI_ProtocolReporter = [
         "internalType": "struct ProtocolReporter.HTokenUnderlyingPrice[]",
         "name": "",
         "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract MarketControllerInterface",
-        "name": "controller",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getAccountLimits",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address[]",
-            "name": "markets",
-            "type": "address[]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "liquidity",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "shortfall",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct ProtocolReporter.AccountLimits",
-        "name": "",
-        "type": "tuple"
       }
     ],
     "stateMutability": "view",

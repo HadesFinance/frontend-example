@@ -3,7 +3,7 @@ window.HADES_CONFIG = {
 		dev: {
 			provider: 'ws://localhost:8545',
 			chainId: 0x539,
-			orchestratorAddress: '0xdb358091fe73714fDBe62BEd9B59Ff26E1bB09D1',
+			orchestratorAddress: '0xfe57175001DAA3BacB220dBe30036241E20F1FA0',
 			etherscan: 'etherscan.io',
 		},
 		test: {

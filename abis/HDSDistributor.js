@@ -5,9 +5,66 @@ window.ABI_HDSDistributor = [
       {
         "indexed": false,
         "internalType": "address",
-        "name": "operator",
+        "name": "miner",
         "type": "address"
       },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "MinerClaimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "miner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "MinerExited",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "PoolClosed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       {
         "indexed": false,
         "internalType": "uint256",
@@ -27,7 +84,7 @@ window.ABI_HDSDistributor = [
         "type": "uint256"
       }
     ],
-    "name": "NewPool",
+    "name": "PoolCreated",
     "type": "event"
   },
   {
@@ -191,6 +248,39 @@ window.ABI_HDSDistributor = [
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "hToken",
+        "type": "address"
+      }
+    ],
+    "name": "closeLendingPool",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "isPoolActive",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint32",
         "name": "id",
         "type": "uint32"
@@ -217,7 +307,7 @@ window.ABI_HDSDistributor = [
           },
           {
             "internalType": "uint32",
-            "name": "status",
+            "name": "state",
             "type": "uint32"
           },
           {
@@ -283,7 +373,7 @@ window.ABI_HDSDistributor = [
           },
           {
             "internalType": "uint32",
-            "name": "status",
+            "name": "state",
             "type": "uint32"
           },
           {
@@ -391,7 +481,7 @@ window.ABI_HDSDistributor = [
       },
       {
         "internalType": "uint32",
-        "name": "poolId",
+        "name": "id",
         "type": "uint32"
       }
     ],

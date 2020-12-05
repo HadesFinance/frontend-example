@@ -83,12 +83,6 @@ async function demoSupply() {
 	await launchTransaction(tx)
 }
 
-async function demoEnterMarket() {
-	const { address } = promptSymbol('ETH')
-	const controller = await globals.hades.controller()
-	await launchTransaction(controller.enterMarkets([address]).send({ from: globals.loginAccount }))
-}
-
 async function demoBorrow() {
 	const { symbol, address } = promptSymbol('DOL')
 	const account = globals.loginAccount
@@ -184,7 +178,7 @@ async function demoClaim() {
 }
 
 function main() {
-	const network = window.HADES_CONFIG.networks.test
+	const network = window.HADES_CONFIG.networks.dev
 	let hades = (globals.hades = new Hades(network))
 
 	const bindClick = (id, handler) => (document.getElementById(id).onclick = handler)
@@ -203,7 +197,6 @@ function main() {
 		bindClick('miningLogin', () => hades.getPools(loginAccount).then(console.log))
 
 		bindClick('supply', demoSupply)
-		bindClick('enterMarket', demoEnterMarket)
 		bindClick('borrow', demoBorrow)
 		bindClick('repay', demoRepay)
 		bindClick('redeem', demoRedeem)

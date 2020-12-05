@@ -4,119 +4,25 @@ window.ABI_MarketController = [
     "inputs": [
       {
         "indexed": false,
-        "internalType": "string",
-        "name": "action",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "pauseState",
-        "type": "bool"
-      }
-    ],
-    "name": "ActionPaused",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "action",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "pauseState",
-        "type": "bool"
-      }
-    ],
-    "name": "ActionPaused",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "error",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "info",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "detail",
-        "type": "uint256"
-      }
-    ],
-    "name": "Failure",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "MarketEntered",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "MarketExited",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
         "internalType": "address",
         "name": "hToken",
         "type": "address"
       }
     ],
     "name": "MarketListed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isCurrentSuspended",
+        "type": "bool"
+      }
+    ],
+    "name": "MarketSuspended",
     "type": "event"
   },
   {
@@ -202,59 +108,6 @@ window.ABI_MarketController = [
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "_borrowGuardianPaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "_mintGuardianPaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "accountAssets",
-    "outputs": [
-      {
-        "internalType": "contract HToken",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -265,29 +118,9 @@ window.ABI_MarketController = [
     "name": "allMarkets",
     "outputs": [
       {
-        "internalType": "contract HToken",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "name": "borrowGuardianPaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -347,9 +180,9 @@ window.ABI_MarketController = [
     "name": "markets",
     "outputs": [
       {
-        "internalType": "bool",
-        "name": "isListed",
-        "type": "bool"
+        "internalType": "enum MarketControllerBase.MarketState",
+        "name": "state",
+        "type": "uint8"
       },
       {
         "internalType": "uint256",
@@ -376,26 +209,6 @@ window.ABI_MarketController = [
     "constant": true
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "mintGuardianPaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
     "inputs": [],
     "name": "orchestrator",
     "outputs": [
@@ -411,10 +224,10 @@ window.ABI_MarketController = [
   },
   {
     "inputs": [],
-    "name": "pauseGuardian",
+    "name": "part1",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "contract MarketControllerPart1",
         "name": "",
         "type": "address"
       }
@@ -425,21 +238,7 @@ window.ABI_MarketController = [
   },
   {
     "inputs": [],
-    "name": "seizeGuardianPaused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "transferGuardianPaused",
+    "name": "suspended",
     "outputs": [
       {
         "internalType": "bool",
@@ -463,6 +262,33 @@ window.ABI_MarketController = [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "_parts",
+        "type": "address[]"
+      }
+    ],
+    "name": "bind",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getOracle",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -502,16 +328,56 @@ window.ABI_MarketController = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "contract HToken",
         "name": "hToken",
         "type": "address"
       }
     ],
-    "name": "checkMembership",
+    "name": "getMarket",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getCollateralFactors",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "hToken",
+        "type": "address"
+      }
+    ],
+    "name": "isListedMarket",
     "outputs": [
       {
         "internalType": "bool",
@@ -526,50 +392,12 @@ window.ABI_MarketController = [
   {
     "inputs": [
       {
-        "internalType": "address[]",
-        "name": "hTokens",
-        "type": "address[]"
-      }
-    ],
-    "name": "enterMarkets",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "hTokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "exitMarket",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "hToken",
         "type": "address"
       }
     ],
-    "name": "isListedMarket",
+    "name": "isLiquidating",
     "outputs": [
       {
         "internalType": "bool",
@@ -602,41 +430,14 @@ window.ABI_MarketController = [
     "name": "mintAllowed",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint8",
         "name": "",
-        "type": "uint256"
+        "type": "uint8"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "minter",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "actualMintAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "mintTokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "mintVerify",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -659,41 +460,12 @@ window.ABI_MarketController = [
     "name": "redeemAllowed",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint8",
         "name": "",
-        "type": "uint256"
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "redeemer",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "redeemAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "redeemTokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "redeemVerify",
-    "outputs": [],
-    "stateMutability": "pure",
     "type": "function",
     "constant": true
   },
@@ -718,36 +490,14 @@ window.ABI_MarketController = [
     "name": "borrowAllowed",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint8",
         "name": "",
-        "type": "uint256"
+        "type": "uint8"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "borrowAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "borrowVerify",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -775,47 +525,14 @@ window.ABI_MarketController = [
     "name": "repayBorrowAllowed",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint8",
         "name": "",
-        "type": "uint256"
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",
     "type": "function",
     "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "payer",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "actualRepayAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "borrowerIndex",
-        "type": "uint256"
-      }
-    ],
-    "name": "repayBorrowVerify",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
@@ -870,60 +587,12 @@ window.ABI_MarketController = [
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "liquidator",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "actualRepayAmount",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "seizeTokens",
-        "type": "uint256"
       }
     ],
-    "name": "liquidateBorrowVerify",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "hTokenCollateral",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "hTokenBorrowed",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "liquidator",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "seizeTokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "seizeAllowed",
+    "name": "liquidateCalculateSeizeTokens",
     "outputs": [
       {
         "internalType": "uint256",
@@ -963,10 +632,17 @@ window.ABI_MarketController = [
         "type": "uint256"
       }
     ],
-    "name": "seizeVerify",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "name": "seizeAllowed",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
     "inputs": [
@@ -1007,34 +683,6 @@ window.ABI_MarketController = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "src",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "dst",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "transferTokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "transferVerify",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "account",
         "type": "address"
       }
@@ -1050,139 +698,11 @@ window.ABI_MarketController = [
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
     "type": "function",
     "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "hTokenModify",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "redeemTokens",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "borrowAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "getHypotheticalAccountLiquidity",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "hTokenBorrowed",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "hTokenCollateral",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "actualRepayAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "liquidateCalculateSeizeTokens",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "newCloseFactorMantissa",
-        "type": "uint256"
-      }
-    ],
-    "name": "setCloseFactor",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "hToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "newCollateralFactorMantissa",
-        "type": "uint256"
-      }
-    ],
-    "name": "setCollateralFactor",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
@@ -1193,13 +713,7 @@ window.ABI_MarketController = [
       }
     ],
     "name": "setMaxAssets",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1212,13 +726,7 @@ window.ABI_MarketController = [
       }
     ],
     "name": "setLiquidationIncentive",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1241,14 +749,55 @@ window.ABI_MarketController = [
         "internalType": "address",
         "name": "hToken",
         "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "state",
-        "type": "bool"
       }
     ],
-    "name": "setMintPaused",
+    "name": "closeMarket",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "hToken",
+        "type": "address"
+      }
+    ],
+    "name": "liquidateMarket",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "hToken",
+        "type": "address"
+      }
+    ],
+    "name": "removeMarket",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "toogleSuspension",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "newCloseFactorMantissa",
+        "type": "uint256"
+      }
+    ],
+    "name": "setCloseFactor",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1261,74 +810,12 @@ window.ABI_MarketController = [
         "type": "address"
       },
       {
-        "internalType": "bool",
-        "name": "state",
-        "type": "bool"
-      }
-    ],
-    "name": "setBorrowPaused",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "state",
-        "type": "bool"
-      }
-    ],
-    "name": "setTransferPaused",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "state",
-        "type": "bool"
-      }
-    ],
-    "name": "setSeizePaused",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_hDol",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "newCollateralFactorMantissa",
         "type": "uint256"
       }
     ],
-    "name": "expandDOLSupply",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_hDol",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "reduceDOLSupply",
+    "name": "setCollateralFactor",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

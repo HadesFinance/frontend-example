@@ -87,6 +87,20 @@ window.ABI_Orchestrator = [
   },
   {
     "inputs": [],
+    "name": "distributorFinal",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "guardian",
     "outputs": [
       {
@@ -101,12 +115,12 @@ window.ABI_Orchestrator = [
   },
   {
     "inputs": [],
-    "name": "initialized",
+    "name": "orchestrator",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "contract OrchestratorInterface",
         "name": "",
-        "type": "bool"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -116,44 +130,19 @@ window.ABI_Orchestrator = [
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_controllerImpl",
-        "type": "address"
+        "internalType": "address[]",
+        "name": "_controllerParts",
+        "type": "address[]"
       },
       {
-        "internalType": "address",
-        "name": "_distributorImpl",
-        "type": "address"
+        "internalType": "address[]",
+        "name": "_contracts",
+        "type": "address[]"
       },
       {
-        "internalType": "address",
-        "name": "_council",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_interestRateStrategy",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_oracle",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_dol",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_hds",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_reporter",
-        "type": "address"
+        "internalType": "address[]",
+        "name": "_hTokenParts",
+        "type": "address[]"
       },
       {
         "internalType": "address payable",
@@ -175,41 +164,34 @@ window.ABI_Orchestrator = [
     "inputs": [
       {
         "internalType": "address",
+        "name": "_orchestrator",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "hToken",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "underlying",
+        "name": "priceFeed",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "priceFeedAddr",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "symbol",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "anchor",
-        "type": "string"
       },
       {
         "internalType": "uint256",
-        "name": "startBlock",
+        "name": "poolStartBlock",
         "type": "uint256"
       }
     ],
-    "name": "createMarket",
+    "name": "setupMarket",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -258,7 +240,7 @@ window.ABI_Orchestrator = [
   },
   {
     "inputs": [],
-    "name": "getInterestRateStrategy",
+    "name": "getInterestRateModel",
     "outputs": [
       {
         "internalType": "address",
@@ -354,6 +336,13 @@ window.ABI_Orchestrator = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "setDistributorFinal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -361,7 +350,7 @@ window.ABI_Orchestrator = [
         "type": "address"
       }
     ],
-    "name": "setDistributorImpl",
+    "name": "upgradeDistributor",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -374,7 +363,7 @@ window.ABI_Orchestrator = [
         "type": "address"
       }
     ],
-    "name": "setMarketControllerImpl",
+    "name": "upgradeMarketController",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -396,11 +385,11 @@ window.ABI_Orchestrator = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "_interestRateStrategy",
+        "name": "_interestRateModel",
         "type": "address"
       }
     ],
-    "name": "setInterestRateStrategy",
+    "name": "setInterestRateModel",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
