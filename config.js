@@ -9,7 +9,7 @@ window.HADES_CONFIG = {
 		test: {
 			provider: 'ws://139.180.193.123:8545',
 			chainId: 0x539,
-			orchestratorAddress: '0xc01F7c458bcF82262CCd8e41387aeFA20a5635cd',
+			orchestratorAddress: '0x458369Be2dEF2ad7b1eEEA42699f084436B22176',
 			etherscan: 'etherscan.io',
 		},
 		kovan: {
