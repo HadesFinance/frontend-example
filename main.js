@@ -93,9 +93,10 @@ async function demoBorrow() {
 		globals.hades.hToken(symbol, address),
 	])
 	const balanceInfo = results[0]
+	console.log('demoBorrow results[2', results)
 	let borrowLimit
 	if (symbol !== 'DOL') {
-		borrowLimit = liquidity / Number(results[1].underlyingPrice)
+		borrowLimit = results[2].liquidity / Number(results[1].underlyingPrice)
 	} else {
 		borrowLimit = results[2].liquidityLiteral
 	}
@@ -120,11 +121,14 @@ async function demoRepay() {
 	if (!inputAmount) return
 
 	const realAmount = literalToReal(inputAmount, balanceInfo.underlyingDecimals)
-	await dol.approve(address, realAmount).send({ from: account })
-	const isContinue = window.confirm('Continue to repayBorrow?')
-	if (!isContinue) return
-
-	await launchTransaction(hToken.repayBorrow(realAmount).send({ from: account }))
+	if (symbol === 'ETH') {
+		await launchTransaction(hToken.repayBorrow().send({ from: account, value: realAmount }))
+	} else {
+		await dol.approve(address, realAmount).send({ from: account })
+		const isContinue = window.confirm('Continue to repayBorrow?')
+		if (!isContinue) return
+		await launchTransaction(hToken.repayBorrow(realAmount).send({ from: account }))
+	}
 }
 
 async function demoRedeem() {
@@ -178,7 +182,7 @@ async function demoClaim() {
 }
 
 function main() {
-	const network = window.HADES_CONFIG.networks.dev
+	const network = window.HADES_CONFIG.networks.test
 	let hades = (globals.hades = new Hades(network))
 
 	const bindClick = (id, handler) => (document.getElementById(id).onclick = handler)
