@@ -291,7 +291,10 @@ class Hades {
 
   async getDistributorStats() {
     const distributor = await this.distributor()
-    return distributor.getDistributorStats().call()
+    const result = await distributor.getDistributorStats().call()
+    const stats = Object.assign({}, result)
+    stats.rewardsPerBlockLiteral = Number(stats.rewardsPerBlock) / HDS_POINT
+    return stats
   }
 
   async getPrice(symbol) {
