@@ -105,7 +105,7 @@ class Hades {
     const mineStartBlockNum = Number(results[4])
     const latestBlockNum = results[5].number
 
-    const hdsMined = this._calculateMined(mineStartBlockNum, latestBlockNum)
+    const hdsMined = this._calculateTotalMined(mineStartBlockNum, latestBlockNum)
     const priceMap = new Map()
     for (const price of prices) {
       priceMap.set(price.hToken, price.underlyingPrice)
@@ -266,6 +266,10 @@ class Hades {
         pool.apy = 0
       }
       pool.totalPowerNormalizedLiteral = pool.totalPowerNormalized / PRICE_POINT
+
+      const newMined = this._calculateMined(Number(pool.lastBlockNumber), latestBlockNum)
+      const totalMined = newMined * HDS_POINT + Number(pool.accumulatedTokens)
+      pool.rewardIndex = Number(pool.rewardIndex) + (totalMined * FIXED_POINT) / pool.totalPowerCorrect
       pools.push(pool)
     }
     const my = []
@@ -416,6 +420,10 @@ class Hades {
     return new this._web3.eth.Contract(abi, addr)
   }
 
+  _calculateTotalMined(start, end) {
+    return this._calculateMined(start, end) + INITIAL_SUPPLY
+  }
+
   _calculateMined(start, end) {
     let total = 0
     let rewardPerBlock = INITIAL_REWARD
@@ -425,7 +433,7 @@ class Hades {
       rewardPerBlock /= 2
     }
     total += (end - start) * INITIAL_REWARD
-    return total + INITIAL_SUPPLY
+    return total
   }
 }
 
