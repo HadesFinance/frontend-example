@@ -76,9 +76,12 @@ async function demoSupply() {
 
   let tx
   if (symbol === 'ETH') {
-    tx = hToken.mint().send({ value: value.toString(), from: globals.loginAccount })
+    tx = hToken.mint().send({ value, from: globals.loginAccount })
   } else {
-    tx = hToken.mint(inputAmount).send({ from: globals.loginAccount })
+    await dol.approve(address, value).send({ from: account })
+    const isContinue = window.confirm('Continue to supply?')
+    if (!isContinue) return
+    tx = hToken.mint(value).send({ from: globals.loginAccount })
   }
   await launchTransaction(tx)
 }
