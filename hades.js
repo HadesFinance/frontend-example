@@ -230,6 +230,7 @@ class Hades {
     const exchangingTokens = [dol.options.address, hds.options.address]
 
     const pools = []
+    const totalPools = results[3].length
     for (const item of results[3]) {
       const pool = Object.assign({}, item)
       pool.totalPowerCorrect = Number(item.totalPower) + Number(item.accumulatedPower)
@@ -268,7 +269,7 @@ class Hades {
       pool.totalPowerNormalizedLiteral = pool.totalPowerNormalized / PRICE_POINT
 
       if (pool.totalPowerCorrect > 0) {
-        const newMined = this._calculateMined(Number(pool.lastBlockNumber), latestBlockNum)
+        const newMined = this._calculateMined(Number(pool.lastBlockNumber), latestBlockNum) / totalPools
         const totalMined = newMined * HDS_POINT + Number(pool.accumulatedTokens)
         pool.rewardIndex = Number(pool.rewardIndex) + (totalMined * FIXED_POINT) / pool.totalPowerCorrect
       }
