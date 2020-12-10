@@ -267,9 +267,11 @@ class Hades {
       }
       pool.totalPowerNormalizedLiteral = pool.totalPowerNormalized / PRICE_POINT
 
-      const newMined = this._calculateMined(Number(pool.lastBlockNumber), latestBlockNum)
-      const totalMined = newMined * HDS_POINT + Number(pool.accumulatedTokens)
-      pool.rewardIndex = Number(pool.rewardIndex) + (totalMined * FIXED_POINT) / pool.totalPowerCorrect
+      if (pool.totalPowerCorrect > 0) {
+        const newMined = this._calculateMined(Number(pool.lastBlockNumber), latestBlockNum)
+        const totalMined = newMined * HDS_POINT + Number(pool.accumulatedTokens)
+        pool.rewardIndex = Number(pool.rewardIndex) + (totalMined * FIXED_POINT) / pool.totalPowerCorrect
+      }
       pools.push(pool)
     }
     const my = []
@@ -286,7 +288,7 @@ class Hades {
         item.claimedLiteral = Number(item.claimed) / HDS_POINT
         item.powerNormalized = (item.power * pools[i].underlyingPrice) / FIXED_POINT
         item.powerNormalizedLiteral = item.powerNormalized / PRICE_POINT
-        item.powerRatio = item.power / pools[i].totalPowerCorrect
+        item.powerRatio = pools[i].totalPowerCorrect > 0 ? item.power / pools[i].totalPowerCorrect : 0
         my.push(item)
       }
     }
