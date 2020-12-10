@@ -242,7 +242,7 @@ class Hades {
         pool.title = lendingPoolTitles.shift()
       } else {
         // POOL_TYPE_EXCHANGING
-        pool.totalPowerNormalized = (pool.totalPowerCorrect * ethPrice) / PRICE_POINT
+        pool.totalPowerNormalized = (pool.totalPowerCorrect * ethPrice) / FIXED_POINT
         pool.underlyingPrice = ethPrice
         pool.title = exchangingPoolTitles.shift()
 
