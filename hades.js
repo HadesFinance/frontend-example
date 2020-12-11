@@ -373,34 +373,6 @@ class Hades {
     }
   }
 
-  // async getHDSPrice() {
-  // 	const self = this
-  // 	return new Promise((resolve, reject) => {
-  // 		const req = new XMLHttpRequest()
-  // 		req.open('get', HDS_PRICE_URL)
-  // 		req.onreadystatechange = () => {
-  // 			console.log('req:', req.readyState, req.status)
-  // 			if (req.readyState == 4 && req.status == 200) {
-  // 				console.log('response', req.responseText)
-  // 				try {
-  // 					const res = JSON.parse(req.responseText)
-  // 					if (res.price) {
-  // 						console.log('update hds price:', self._lastHDSPrice, Number(res.price))
-  // 						self._lastHDSPrice = Number(res.price)
-  // 						resolve(self._lastHDSPrice)
-  // 					} else {
-  // 						reject('No price field')
-  // 					}
-  // 				} catch (e) {
-  // 					console.log('failed to parse response:', e)
-  // 					reject('Not json format')
-  // 				}
-  // 			}
-  // 		}
-  // 		req.send()
-  // 	})
-  // }
-
   // Private methods
 
   _transformHTokenBalances(obj) {
