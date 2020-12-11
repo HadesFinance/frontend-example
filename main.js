@@ -6,6 +6,8 @@ let globals = {
   pendingTransactions: [],
 }
 
+const MAX_UINT256 = '0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+
 function literalToReal(literal, decimals) {
   const real = Number(literal) * 10 ** Number(decimals)
   return real.toString()
@@ -67,7 +69,8 @@ async function confirmPendingTransactions() {
 
 async function demoSupply() {
   const { symbol, address } = promptSymbol('ETH')
-  const balanceInfo = await globals.hades.getHTokenBalances(address, globals.loginAccount)
+  const account = globals.loginAccount
+  const balanceInfo = await globals.hades.getHTokenBalances(address, account)
   const inputAmount = window.prompt(`Input supply amount, you have total ${balanceInfo.tokenBalanceLiteral}`, ``)
   if (!inputAmount) return
 
@@ -76,12 +79,17 @@ async function demoSupply() {
 
   let tx
   if (symbol === 'ETH') {
-    tx = hToken.mint().send({ value, from: globals.loginAccount })
+    tx = hToken.mint().send({ value, from: account })
   } else {
-    await dol.approve(address, value).send({ from: account })
+    const dol = await globals.hades.dol()
+    const allowance = await dol.allowance(account, address).call()
+    console.log('allowance:', allowance.toString())
+    if (BigInt(allowance.toString()) < BigInt(value)) {
+      await dol.approve(address, MAX_UINT256).send({ from: account })
+    }
     const isContinue = window.confirm('Continue to supply?')
     if (!isContinue) return
-    tx = hToken.mint(value).send({ from: globals.loginAccount })
+    tx = hToken.mint(value).send({ from: account })
   }
   await launchTransaction(tx)
 }
