@@ -24,6 +24,7 @@ class Hades {
     this._distributor = null
     this._hTokens = {}
     this._lpTokens = {}
+    this._underlyingTokens = {}
     this._lastHDSPrice = 1
   }
 
@@ -82,6 +83,13 @@ class Hades {
       this._lpTokens[addr] = this._createContractInstance(ABI_EIP20Interface, addr)
     }
     return raw ? this._lpTokens[addr] : this._lpTokens[addr].methods
+  }
+
+  async underlyingToken(addr, raw) {
+    if (!this._underlyingTokens[addr]) {
+      this._underlyingTokens = this._createContractInstance(ABI_EIP20Interface, addr)
+    }
+    return raw ? this._underlyingTokens[addr] : this._underlyingTokens[addr].methods
   }
 
   async getOverview() {
