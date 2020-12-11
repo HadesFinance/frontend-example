@@ -179,7 +179,12 @@ async function increaseLPPower() {
 
   const realAmount = literalToReal(inputAmount, decimals)
   const distributor = results[2]
-  await lpToken.approve(distributor._address, realAmount).send({ from: account })
+  const allowance = await lpToken.allowance(account, distributor._address).call()
+  console.log('allowance:', allowance.toString())
+  if (BigInt(allowance.toString()) < BigInt(realAmount)) {
+    await lpToken.approve(distributor._address, realAmount).send({ from: account })
+  }
+
   const isContinue = window.confirm('Continue to mint?')
   if (!isContinue) return
 
