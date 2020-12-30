@@ -197,8 +197,101 @@ async function demoClaim() {
   await launchTransaction(distributor.claim(pid).send({ from: globals.loginAccount }))
 }
 
+async function demoExit() {}
+
+async function demoSubmitProposal() {
+  const target = document.getElementById('targetInput').value
+  const value = document.getElementById('valueInput').value
+  const signature = document.getElementById('signatureInput').value
+  const param1 = document.getElementById('paramInput1').value
+  const param2 = document.getElementById('paramInput2').value
+  const delay = document.getElementById('delayInput').value
+  const votingPeriod = document.getElementById('votingPeriodInput').value
+  const desc = document.getElementById('descInput').value
+
+  let paramValues = []
+  if (param1 !== '') {
+    paramValues.push(param1)
+  }
+  if (param2 !== '') {
+    paramValues.push(param2)
+  }
+  const paramsData = globals.hades.encodeParameters(signature, paramValues)
+  console.log('paramsData:', paramsData)
+  const council = await globals.hades.council()
+  const t = council
+    .propose(target, value, signature, paramsData, delay, votingPeriod, desc)
+    .send({ from: globals.loginAccount })
+  await launchTransaction(t)
+}
+
+async function demoVoteProposal() {
+  const pid = document.getElementById('proposalIdInput').value
+  console.log('demoVoteProposal proposalId', pid)
+  const council = await globals.hades.council()
+  await launchTransaction(council.vote(pid).send({ from: globals.loginAccount }))
+}
+
+async function demoExecuteProposal() {
+  const pid = document.getElementById('proposalIdInput').value
+  console.log('demoVoteProposal proposalId', pid)
+  const council = await globals.hades.council()
+  await launchTransaction(council.execute(pid).send({ from: globals.loginAccount }))
+}
+
+async function getProposalList() {
+  // http_get(network.indexServer + '/council_proposals?state=all&offset=0&limit=25')
+}
+
+async function getProposalDetail() {
+  // http_get(network.indexServer + '/council_proposal/1')
+}
+
+async function getLiquidatingList() {
+  // http_get(network.indexServer + '/potential_liquidations?state=all&offset=0&limit=25')
+}
+
+async function demoLiquidate() {
+  const repaySymbol = document.getElementById('repaySymbolInput').value
+  const borrowerAddress = document.getElementById('borrowerAddressInput').value
+  const maxRepay = await globals.hades.getMaxRepay(repaySymbol, borrowerAddress)
+  console.log('demoLiquidate maxRepay', maxRepay)
+
+  const collateralSymbol = document.getElementById('seizedCollateralInput').value
+  const liquidateAmountLiteral = document.getElementById('liquidateAmountInput').value
+  const decimals = globals.hades._marketInfo[repaySymbol].underlyingDecimals
+  const liquidateAmount = literalToReal(liquidateAmountLiteral, decimals)
+  const seizeTokens = await globals.hades.calculateSeizeTokens(repaySymbol, collateralSymbol, liquidateAmount)
+  console.log('demoLiquidate seizeTokens', seizeTokens)
+
+  const liquidator = globals.loginAccount
+  const collateralAddress = globals.hades._marketInfo[collateralSymbol].hToken
+  const hToken = globals.hades.hToken(repaySymbol)
+  let transaction
+  if (repaySymbol === 'ETH') {
+    transaction = hToken
+      .liquidateBorrow(borrowerAddress, collateralAddress)
+      .send({ from: liquidator, value: liquidateAmount })
+  } else {
+    const underlyingAddress = globals.hades._marketInfo[repaySymbol].underlyingAssetAddress
+    console.log('demoLiquidate underlyingAddress', underlyingAddress)
+
+    const erc20Token = await globals.hades.underlyingToken(underlyingAddress)
+    const repayTokenAddress = globals.hades._marketInfo[repaySymbol].hToken
+    const allowance = await erc20Token.allowance(liquidator, repayTokenAddress).call()
+    console.log('demoLiquidate allowance:', allowance.toString())
+    if (BigInt(allowance.toString()) < BigInt(liquidateAmount)) {
+      await erc20Token.approve(repayTokenAddress, MAX_UINT256).send({ from: liquidator })
+    }
+
+    transaction = hToken.liquidateBorrow(borrowerAddress, liquidateAmount, collateralAddress).send({ from: liquidator })
+  }
+
+  await launchTransaction(transaction)
+}
+
 function main() {
-  const network = window.HADES_CONFIG.networks.test
+  const network = window.HADES_CONFIG.networks.dev
   let hades = (globals.hades = new Hades(network))
 
   const bindClick = (id, handler) => (document.getElementById(id).onclick = handler)
@@ -208,6 +301,7 @@ function main() {
       return alert('Wrong Network!')
     }
     hades.setProvider(window.web3.currentProvider)
+    hades.loadHTokens()
 
     const loginAccount = (globals.loginAccount = window.ethereum.selectedAddress)
     console.log('Login Account:', loginAccount)
@@ -222,7 +316,13 @@ function main() {
     bindClick('redeem', demoRedeem)
     bindClick('increaseLPPower', increaseLPPower)
     bindClick('claim', demoClaim)
-    bindClick('exit')
+    bindClick('exit', demoExit)
+
+    bindClick('submitProposal', demoSubmitProposal)
+    bindClick('voteProposal', demoVoteProposal)
+    bindClick('executeProposal', demoExecuteProposal)
+
+    bindClick('liquidate', demoLiquidate)
   }
 
   bindClick('overview', () => hades.getOverview().then(console.log))
@@ -230,6 +330,8 @@ function main() {
   bindClick('mining', () => processPools().then(console.log))
   bindClick('distributorStats', () => hades.getDistributorStats().then(console.log))
   bindClick('prices', () => hades.getPrices().then(console.log))
+  bindClick('getProposalList', getProposalList)
+  bindClick('getLiquidatingList', getLiquidatingList)
 
   bindClick('connect', () => {
     if (window.ethereum) {
@@ -248,6 +350,7 @@ function main() {
 
   processMarkets()
   processPools()
+  hades.loadHTokens()
 }
 
 window.onload = main

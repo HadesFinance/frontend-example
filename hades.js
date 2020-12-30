@@ -22,7 +22,9 @@ class Hades {
     this._reporter = null
     this._controller = null
     this._distributor = null
+    this._council = null
     this._hTokens = {}
+    this._marketInfo = {}
     this._lpTokens = {}
     this._underlyingTokens = {}
     this._lastHDSPrice = 1
@@ -35,6 +37,21 @@ class Hades {
   async isTransactionConfirmed(hash) {
     const tx = await this._web3.eth.getTransaction(hash)
     return !!tx && !!tx.blockHash
+  }
+
+  async loadHTokens() {
+    const reporter = await this.reporter()
+    const markets = await reporter.getAllMarketInfo().call()
+    for (const market of markets) {
+      this._marketInfo[market.underlyingSymbol] = market
+      if (market.underlyingSymbol === 'ETH') {
+        this._hEther = this._createContractInstance(ABI_HEther, market.hToken)
+        this._hTokens[market.underlyingSymbol] = this._hEther
+      } else {
+        const instance = this._createContractInstance(ABI_HErc20, market.hToken)
+        this._hTokens[market.underlyingSymbol] = instance
+      }
+    }
   }
 
   async dol(raw) {
@@ -67,15 +84,15 @@ class Hades {
     return raw ? this._distributor : this._distributor.methods
   }
 
-  async hToken(underlyingSymbol, addr, raw) {
-    if (!this._hTokens[addr]) {
-      if (underlyingSymbol === 'ETH') {
-        this._hTokens[addr] = this._createContractInstance(ABI_HEther, addr)
-      } else {
-        this._hTokens[addr] = this._createContractInstance(ABI_HErc20, addr)
-      }
+  async council(raw) {
+    if (!this._council) {
+      this._council = await this._createHadesContractInstance(ABI_Council, 'getCouncil')
     }
-    return raw ? this._hTokens[addr] : this._hTokens[addr].methods
+    return raw ? this._council : this._council.methods
+  }
+
+  hToken(underlyingSymbol, raw) {
+    return raw ? this._hTokens[underlyingSymbol] : this._hTokens[underlyingSymbol].methods
   }
 
   async lpToken(addr, raw) {
@@ -87,7 +104,7 @@ class Hades {
 
   async underlyingToken(addr, raw) {
     if (!this._underlyingTokens[addr]) {
-      this._underlyingTokens = this._createContractInstance(ABI_EIP20Interface, addr)
+      this._underlyingTokens[addr] = this._createContractInstance(ABI_EIP20Interface, addr)
     }
     return raw ? this._underlyingTokens[addr] : this._underlyingTokens[addr].methods
   }
@@ -175,7 +192,7 @@ class Hades {
       market.reserveFactorLiteral = Number(item.reserveFactorMantissa) / FIXED_POINT
 
       const decimalsDiff = Number(item.underlyingDecimals) - Number(item.hTokenDecimals)
-      market.exchangeRateLiteral = Number(item.exchangeRateCurrent) / FIXED_POINT / 10 ** decimalsDiff
+      market.exchangeRateLiteral = Number(item.exchangeRateCurrent) / FIXED_POINT / Math.pow(10, decimalsDiff)
       market.liquidationIncentiveLiteral = 0.08
       markets.push(market)
     }
@@ -379,6 +396,46 @@ class Hades {
         ws.send(JSON.stringify({ ping: Date.now() }))
       }, 60000)
     }
+  }
+
+  encodeParameters(signature, values) {
+    if (values.length === 0) {
+      return '0x'
+    }
+    let parameterStartPos = 0
+    let parameterEndPos = 0
+    for (let i = 0; i < signature.length; i++) {
+      if (signature[i] === '(') {
+        parameterStartPos = i
+      }
+      if (signature[i] === ')') {
+        parameterEndPos = i
+      }
+    }
+    const typeSlice = signature.slice(parameterStartPos + 1, parameterEndPos)
+    if (values.length === 1) {
+      const type = typeSlice
+      return this._web3.eth.abi.encodeParameter(type, values[0])
+    } else {
+      const typesArray = typeSlice.split(',')
+      return this._web3.eth.abi.encodeParameters(typesArray, values)
+    }
+  }
+
+  async getMaxRepay(underlyingSymbol, borrowerAddress) {
+    const closeFactor = 0.5
+    const hToken = this.hToken(underlyingSymbol)
+    const borrowBalance = await hToken.borrowBalanceCurrent(borrowerAddress).call()
+    const decimals = Number(this._marketInfo[underlyingSymbol].underlyingDecimals)
+    return (Number(borrowBalance) * closeFactor) / Math.pow(10, decimals)
+  }
+
+  async calculateSeizeTokens(repaySymbol, collateralSymbol, liquidateAmount) {
+    const controller = await this.controller()
+    const repayToken = this._marketInfo[repaySymbol].hToken
+    const collateralToken = this._marketInfo[collateralSymbol].hToken
+    const result = await controller.liquidateCalculateSeizeTokens(repayToken, collateralToken, liquidateAmount).call()
+    return Number(result) / Math.pow(10, 8)
   }
 
   // Private methods
