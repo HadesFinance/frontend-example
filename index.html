@@ -29,20 +29,20 @@
         <button id="exit">Exit Pool</button><br />
         <hr />
         <h3>Council API</h3>
-        <input placeholder="target" id="targetInput"/><br />
-        <input placeholder="value" id="valueInput"/><br />
-        <input placeholder="signature" id="signatureInput"/><br />
-        <input placeholder="param1" id="paramInput1"/>
-        <input placeholder="param2" id="paramInput2"/><br />
-        <input placeholder="delay" id="delayInput"/><br />
-        <input placeholder="votingPeriod" id="votingPeriodInput"/><br />
-        <input placeholder="desc" id="descInput"/><br />
+        <button id="getCouncilMembers">Get Members</button><br />
+        <input placeholder="target" id="targetInput" /><br />
+        <input placeholder="value" id="valueInput" /><br />
+        <input placeholder="signature" id="signatureInput" /><br />
+        <input placeholder="param1" id="paramInput1" />
+        <input placeholder="param2" id="paramInput2" /><br />
+        <input placeholder="delay" id="delayInput" /><br />
+        <input placeholder="votingPeriod" id="votingPeriodInput" /><br />
+        <input placeholder="desc" id="descInput" /><br />
         <button id="submitProposal">Submit Proposal</button><br />
-        <input placeholder="proposal id" id="proposalIdInput"/><br />
+        <input placeholder="proposal id" id="proposalIdInput" /><br />
         <button id="voteProposal">Vote Proposal</button>
-        <button id="executeProposal">Execute Propose</button>
-        <br/>
-        <input placeholder="all,pending,queued,executed" id="proposalFilterInput"/>
+        <button id="executeProposal">Execute Propose</button><br/>
+        <input placeholder="all,pending,queued,executed" id="proposalFilterInput" />
         <button id="getProposalList">Proposal List</button>
         <hr />
         <h3>Liquidation API</h3>
@@ -52,19 +52,19 @@
         <input placeholder="amount" id="liquidateAmountInput" /> <br />
         <input placeholder="collateral" id="seizedCollateralInput" /> <br />
         <button id="liquidate">Liquidate</button>
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-    <script src="./abis/EIP20Interface.js"></script>
-    <script src="./abis/DOL.js"></script>
-    <script src="./abis/HDS.js"></script>
-    <script src="./abis/HDSDistributor.js"></script>
-    <script src="./abis/HErc20.js"></script>
-    <script src="./abis/HEther.js"></script>
-    <script src="./abis/MarketController.js"></script>
-    <script src="./abis/Orchestrator.js"></script>
-    <script src="./abis/ProtocolReporter.js"></script>
-    <script src="./abis/Council.js"></script>
-    <script src="./config.js"></script>
-    <script src="./hades.js"></script>
-    <script src="./main.js"> </script>
-</html>
+        </body>
+        <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+        <script src="./abis/EIP20Interface.js"></script>
+        <script src="./abis/DOL.js"></script>
+        <script src="./abis/HDS.js"></script>
+        <script src="./abis/HDSDistributor.js"></script>
+        <script src="./abis/HErc20.js"></script>
+        <script src="./abis/HEther.js"></script>
+        <script src="./abis/MarketController.js"></script>
+        <script src="./abis/Orchestrator.js"></script>
+        <script src="./abis/ProtocolReporter.js"></script>
+        <script src="./abis/Council.js"></script>
+        <script src="./config.js"></script>
+        <script src="./hades.js"></script>
+        <script src="./main.js"> </script>
+    </html>

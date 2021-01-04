@@ -197,7 +197,17 @@ async function demoClaim() {
   await launchTransaction(distributor.claim(pid).send({ from: globals.loginAccount }))
 }
 
-async function demoExit() {}
+async function demoExit() {
+  const pid = window.prompt('Input pool id', '0')
+  const distributor = await globals.hades.distributor()
+  await launchTransaction(distributor.exit(pid).send({ from: globals.loginAccount }))
+}
+
+async function demoGetMembers() {
+  const council = await globals.hades.council()
+  const members = await council.getMembers().call()
+  console.log('member:', members)
+}
 
 async function demoSubmitProposal() {
   const target = document.getElementById('targetInput').value
@@ -291,7 +301,7 @@ async function demoLiquidate() {
 }
 
 function main() {
-  const network = window.HADES_CONFIG.networks.dev
+  const network = window.HADES_CONFIG.networks.test
   let hades = (globals.hades = new Hades(network))
 
   const bindClick = (id, handler) => (document.getElementById(id).onclick = handler)
@@ -332,6 +342,7 @@ function main() {
   bindClick('prices', () => hades.getPrices().then(console.log))
   bindClick('getProposalList', getProposalList)
   bindClick('getLiquidatingList', getLiquidatingList)
+  bindClick('getCouncilMembers', demoGetMembers)
 
   bindClick('connect', () => {
     if (window.ethereum) {
